@@ -1,0 +1,22 @@
+{
+    "targets": {
+      "debug": {
+        "outFile": "build/wasi-consumer-as-debug.wasm",
+        "textFile": "build/wasi-consumer-as-debug.wat",
+        "sourceMap": true,
+        "debug": true
+      },
+      "release": {
+        "outFile": "build/wasi-consumer-as.wasm",
+        "textFile": "build/wasi-consumer-as.wat",
+        "sourceMap": true,
+        "optimizeLevel": 3,
+        "shrinkLevel": 0,
+        "converge": false,
+        "noAssert": false
+      }
+    },
+    "options": {
+      "bindings": "esm"
+    }
+  }

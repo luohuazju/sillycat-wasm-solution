@@ -1,0 +1,16 @@
+{
+    "name": "wasi-consumer-as",
+    "version": "1.0.0",
+    "scripts": {
+      "build:debug": "asc src/add_consumer.ts --target debug",
+      "build:release": "asc src/add_consumer.ts --target release",
+      "clean": "rm -rf build/"
+    },
+    "dependencies": {
+      "as-wasi": "^0.4.6",
+      "assemblyscript": "^0.20.10",
+      "wasi": "^0.0.6"
+    },
+    "type": "module",
+    "license": "MIT"
+  }
