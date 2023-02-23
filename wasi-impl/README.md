@@ -13,4 +13,10 @@ drwxr-xr-x    5 carl  staff       160 Feb 22 21:30 incremental
 
 ./target/debug/wasi-impl ../wasi-consumer-rust/target/wasm32-wasi/debug/wasi_consumer_rust.wasm consume_add 1 2
 3
+
+./target/debug/wasi-impl ../wasi-consumer-as/build/wasi-consumer-as.wasm consume_add 1 4
+5
+
+./target/debug/wasi-impl ../wasi-consumer-as/build/wasi-consumer-as.wat consume_add 1 4
+5
 ```
