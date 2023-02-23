@@ -2,7 +2,7 @@ import sys
 import os
 import logging
 
-logging.warn('Logging important warnings')
+logging.warning('Logging important warnings')
 
 print('Content-Type: text/plain; charset=UTF-8')
 print('Status: 200 OK')
@@ -28,5 +28,5 @@ print()
 print('### Files ###')
 print()
 
-for f in os.listdir('/wasiconsumer'):
+for f in os.listdir('/web'):
     print(f)
