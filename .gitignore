@@ -1,5 +1,5 @@
-wasi-consumer-py/.idea
-wasi-consumer-py/opt
+wagi-web/.idea
+wagi-web/opt
 wasi-consumer-as/build
 wasi-consumer-as/node_modules
 wasi-consumer-rust/target
