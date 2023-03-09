@@ -1,4 +1,12 @@
-Build and Run
+### structure
+src/calculator.rs is the implementation on top of interface in wasi-interface
+
+### Rust ENV
+```
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+### Build and Run
 ```
 cargo build
 
