@@ -92,6 +92,15 @@ test_with_rust_app = BashOperator(
     dag=dag,
 )
 
+test_with_as_app = BashOperator(
+    task_id='test_with_as_app',
+    depends_on_past=False,
+    bash_command='cd /home/carl/work/sillycat-wasm-solution/wasi-impl/ && '
+                 './target/debug/wasi-impl ../wasi-consumer-as/build/wasi-consumer-as.wasm consume_add 1 4 ',
+    dag=dag,
+)
+
 fetch_poc_from_github >> prepare_rust_dependency >> build_app_with_rust >> test_with_rust_app
-fetch_poc_from_github >> prepare_as_dependency >> build_app_with_as
+fetch_poc_from_github >> prepare_as_dependency >> build_app_with_as >> test_with_as_app
 fetch_poc_from_github >> build_runtime >> test_with_rust_app
+fetch_poc_from_github >> build_runtime >> test_with_as_app
