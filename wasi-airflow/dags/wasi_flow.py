@@ -30,7 +30,10 @@ dag = DAG(
 fetch_poc_from_github = BashOperator(
     task_id='fetch_poc_from_github',
     depends_on_past=False,
-    bash_command='cd /home/carl/work/sillycat-wasm-solution/ && /usr/bin/git pull origin main ',
+    bash_command="""
+        cd /home/carl/work/sillycat-wasm-solution/ 
+        /usr/bin/git pull origin main 
+        """,
     dag=dag,
 )
 
@@ -40,16 +43,20 @@ fetch_poc_from_github = BashOperator(
 prepare_rust_dependency = BashOperator(
     task_id='prepare_rust_dependency',
     depends_on_past=False,
-    bash_command='cd /home/carl/work/sillycat-wasm-solution/wasi-consumer-rust/ && '
-                 '~/.cargo/bin/cargo install -f cargo-wasi ',
+    bash_command="""
+        cd /home/carl/work/sillycat-wasm-solution/wasi-consumer-rust/
+        ~/.cargo/bin/cargo install -f cargo-wasi 
+        """,
     dag=dag,
 )
 
 build_app_with_rust = BashOperator(
     task_id='build_app_with_rust',
     depends_on_past=False,
-    bash_command='cd /home/carl/work/sillycat-wasm-solution/wasi-consumer-rust/ && '
-                 '~/.cargo/bin/cargo wasi build ',
+    bash_command="""
+        cd /home/carl/work/sillycat-wasm-solution/wasi-consumer-rust/
+        ~/.cargo/bin/cargo wasi build 
+        """,
     dag=dag,
 )
 
@@ -59,16 +66,20 @@ build_app_with_rust = BashOperator(
 prepare_as_dependency = BashOperator(
     task_id='prepare_as_dependency',
     depends_on_past=False,
-    bash_command='cd /home/carl/work/sillycat-wasm-solution/wasi-consumer-as/ && '
-                 '~/.nodenv/shims/npm install ',
+    bash_command="""
+        cd /home/carl/work/sillycat-wasm-solution/wasi-consumer-as/
+        ~/.nodenv/shims/npm install 
+        """,
     dag=dag,
 )
 
 build_app_with_as = BashOperator(
     task_id='build_app_with_as',
     depends_on_past=False,
-    bash_command='cd /home/carl/work/sillycat-wasm-solution/wasi-consumer-as/ && '
-                 '~/.nodenv/shims/npm run build:release ',
+    bash_command="""
+        cd /home/carl/work/sillycat-wasm-solution/wasi-consumer-as
+        ~/.nodenv/shims/npm run build:release 
+    """,
     dag=dag,
 )
 
@@ -78,17 +89,20 @@ build_app_with_as = BashOperator(
 build_runtime = BashOperator(
     task_id='build_runtime',
     depends_on_past=False,
-    bash_command='cd /home/carl/work/sillycat-wasm-solution/wasi-impl/ && '
-                 '~/.cargo/bin/cargo build ',
+    bash_command="""
+        cd /home/carl/work/sillycat-wasm-solution/wasi-impl/
+        ~/.cargo/bin/cargo build 
+        """,
     dag=dag,
 )
 
 test_with_rust_app = BashOperator(
     task_id='test_with_rust_app',
     depends_on_past=False,
-    bash_command='cd /home/carl/work/sillycat-wasm-solution/wasi-impl/ && '
-                 './target/debug/wasi-impl ../wasi-consumer-rust/target/wasm32-wasi/debug/wasi_consumer_rust.wasm '
-                 'consume_add 1 2 ',
+    bash_command="""
+        cd /home/carl/work/sillycat-wasm-solution/wasi-impl/
+        ./target/debug/wasi-impl ../wasi-consumer-rust/target/wasm32-wasi/debug/wasi_consumer_rust.wasm consume_add 1 2 
+        """,
     dag=dag,
 )
 
