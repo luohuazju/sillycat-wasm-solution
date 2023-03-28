@@ -44,7 +44,8 @@ prepare_rust_dependency = BashOperator(
 build_app_with_rust = BashOperator(
     task_id='build_app_with_rust',
     depends_on_past=False,
-    bash_command='cd /home/carl/work/sillycat-wasm-solution/wasi-consumer-rust/ && cargo wasi build ',
+    bash_command='cd /home/carl/work/sillycat-wasm-solution/wasi-consumer-rust/ && '
+                 '/home/carl/.cargo/bin/cargo wasi build ',
     dag=dag,
 )
 
