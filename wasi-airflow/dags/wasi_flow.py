@@ -60,6 +60,16 @@ build_app_with_rust = BashOperator(
     dag=dag,
 )
 
+unittest_app_with_rust = BashOperator(
+    task_id='unittest_app_with_rust',
+    depends_on_past=False,
+    bash_command="""
+        cd /home/carl/work/sillycat-wasm-solution/wasi-consumer-rust/
+        ~/.cargo/bin/cargo test 
+        """,
+    dag=dag,
+)
+
 #############################################
 # AssemblyScript App
 #############################################
@@ -116,7 +126,7 @@ test_with_as_app = BashOperator(
     dag=dag,
 )
 
-fetch_poc_from_github >> prepare_rust_dependency >> build_app_with_rust >> test_with_rust_app
+fetch_poc_from_github >> prepare_rust_dependency >> build_app_with_rust >> unittest_app_with_rust >> test_with_rust_app
 fetch_poc_from_github >> prepare_as_dependency >> build_app_with_as >> test_with_as_app
 fetch_poc_from_github >> build_runtime >> test_with_rust_app
 fetch_poc_from_github >> build_runtime >> test_with_as_app

@@ -2,6 +2,7 @@
     "name": "wasi-consumer-as",
     "version": "1.0.0",
     "scripts": {
+      "test": "node tests",
       "build:debug": "asc src/add_consumer.ts --target debug",
       "build:release": "asc src/add_consumer.ts --target release",
       "clean": "rm -rf build/"
