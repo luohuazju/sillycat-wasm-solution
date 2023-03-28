@@ -93,6 +93,16 @@ build_app_with_as = BashOperator(
     dag=dag,
 )
 
+unittest_app_with_as = BashOperator(
+    task_id='unittest_app_with_as',
+    depends_on_past=False,
+    bash_command="""
+        cd /home/carl/work/sillycat-wasm-solution/wasi-consumer-as
+        ~/.nodenv/shims/npm run test 
+    """,
+    dag=dag,
+)
+
 ######################################
 # Prepare Runtime to Execute App
 ######################################
@@ -102,6 +112,16 @@ build_runtime = BashOperator(
     bash_command="""
         cd /home/carl/work/sillycat-wasm-solution/wasi-impl/
         ~/.cargo/bin/cargo build 
+        """,
+    dag=dag,
+)
+
+unittest_runtime = BashOperator(
+    task_id='unittest_runtime',
+    depends_on_past=False,
+    bash_command="""
+        cd /home/carl/work/sillycat-wasm-solution/wasi-impl/
+        ~/.cargo/bin/cargo test 
         """,
     dag=dag,
 )
@@ -127,6 +147,6 @@ test_with_as_app = BashOperator(
 )
 
 fetch_poc_from_github >> prepare_rust_dependency >> build_app_with_rust >> unittest_app_with_rust >> test_with_rust_app
-fetch_poc_from_github >> prepare_as_dependency >> build_app_with_as >> test_with_as_app
-fetch_poc_from_github >> build_runtime >> test_with_rust_app
-fetch_poc_from_github >> build_runtime >> test_with_as_app
+fetch_poc_from_github >> prepare_as_dependency >> build_app_with_as >> unittest_app_with_as >> test_with_as_app
+fetch_poc_from_github >> build_runtime >> unittest_runtime >> test_with_rust_app
+fetch_poc_from_github >> build_runtime >> unittest_runtime >> test_with_as_app
