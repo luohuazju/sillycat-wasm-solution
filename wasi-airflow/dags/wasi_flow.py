@@ -41,7 +41,7 @@ prepare_rust_dependency = BashOperator(
     task_id='prepare_rust_dependency',
     depends_on_past=False,
     bash_command='cd /home/carl/work/sillycat-wasm-solution/wasi-consumer-rust/ && '
-                 '/home/carl/.cargo/bin/cargo install -f cargo-wasi ',
+                 '~/.cargo/bin/cargo install -f cargo-wasi ',
     dag=dag,
 )
 
@@ -49,7 +49,7 @@ build_app_with_rust = BashOperator(
     task_id='build_app_with_rust',
     depends_on_past=False,
     bash_command='cd /home/carl/work/sillycat-wasm-solution/wasi-consumer-rust/ && '
-                 '/home/carl/.cargo/bin/cargo wasi build ',
+                 '~/.cargo/bin/cargo wasi build ',
     dag=dag,
 )
 
@@ -72,6 +72,26 @@ build_app_with_as = BashOperator(
     dag=dag,
 )
 
+######################################
+# Prepare Runtime to Execute App
+######################################
+build_runtime = BashOperator(
+    task_id='build_runtime',
+    depends_on_past=False,
+    bash_command='cd /home/carl/work/sillycat-wasm-solution/wasi-impl/ && '
+                 '~/.cargo/bin/cargo build ',
+    dag=dag,
+)
 
-fetch_poc_from_github >> prepare_rust_dependency >> build_app_with_rust
+test_with_rust_app = BashOperator(
+    task_id='test_with_rust_app',
+    depends_on_past=False,
+    bash_command='cd /home/carl/work/sillycat-wasm-solution/wasi-impl/ && '
+                 './target/debug/wasi-impl ../wasi-consumer-rust/target/wasm32-wasi/debug/wasi_consumer_rust.wasm '
+                 'consume_add 1 2 ',
+    dag=dag,
+)
+
+fetch_poc_from_github >> prepare_rust_dependency >> build_app_with_rust >> test_with_rust_app
 fetch_poc_from_github >> prepare_as_dependency >> build_app_with_as
+fetch_poc_from_github >> build_runtime >> test_with_rust_app
