@@ -37,7 +37,8 @@ fetch_poc_from_github = BashOperator(
 prepare_rust_dependency = BashOperator(
     task_id='prepare_rust_dependency',
     depends_on_past=False,
-    bash_command='cd /home/carl/work/sillycat-wasm-solution/wasi-consumer-rust/ && cargo install -f cargo-wasi ',
+    bash_command='cd /home/carl/work/sillycat-wasm-solution/wasi-consumer-rust/ && '
+                 '/home/carl/.cargo/bin/cargo install -f cargo-wasi ',
     dag=dag,
 )
 
