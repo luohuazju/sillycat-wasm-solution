@@ -95,8 +95,10 @@ test_with_rust_app = BashOperator(
 test_with_as_app = BashOperator(
     task_id='test_with_as_app',
     depends_on_past=False,
-    bash_command='cd /home/carl/work/sillycat-wasm-solution/wasi-impl/ && '
-                 './target/debug/wasi-impl ../wasi-consumer-as/build/wasi-consumer-as.wasm consume_add 1 4 ',
+    bash_command="""
+        cd /home/carl/work/sillycat-wasm-solution/wasi-impl/
+        ./target/debug/wasi-impl ../wasi-consumer-as/build/wasi-consumer-as.wasm consume_add 1 4 
+        """,
     dag=dag,
 )
 
