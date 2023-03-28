@@ -27,15 +27,25 @@ dag = DAG(
     schedule_interval=timedelta(days=1),
 )
 
-t1 = BashOperator(
-    task_id='print_date',
-    bash_command='date',
-    dag=dag,
-)
-t2 = BashOperator(
-    task_id='call_echo',
+fetch_poc_from_github = BashOperator(
+    task_id='fetch_poc_from_github',
     depends_on_past=False,
-    bash_command='echo.sh',
+    bash_command='cd /home/carl/work/sillycat-wasm-solution/ && /usr/bin/git pull origin main ',
     dag=dag,
 )
-t1 >> t2
+
+prepare_rust_dependency = BashOperator(
+    task_id='prepare_rust_dependency',
+    depends_on_past=False,
+    bash_command='cd /home/carl/work/sillycat-wasm-solution/wasi-consumer-rust/ && cargo install -f cargo-wasi ',
+    dag=dag,
+)
+
+build_app_with_rust = BashOperator(
+    task_id='build_app_with_rust',
+    depends_on_past=False,
+    bash_command='cd /home/carl/work/sillycat-wasm-solution/wasi-consumer-rust/ && cargo wasi build ',
+    dag=dag,
+)
+
+fetch_poc_from_github >> prepare_rust_dependency >> build_app_with_rust
