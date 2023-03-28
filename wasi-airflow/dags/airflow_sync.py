@@ -45,4 +45,5 @@ copy_scripts_to_directory = BashOperator(
     dag=dag,
 )
 
-fetch_files_from_github >> copy_dags_to_directory >> copy_scripts_to_directory
+fetch_files_from_github >> copy_dags_to_directory
+fetch_files_from_github >> copy_scripts_to_directory
