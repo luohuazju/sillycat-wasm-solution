@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 """
-###  Run WASI build and Process
+### Tutorial Documentation
+Documentation that goes along with the Airflow tutorial located
+[here](<https://airflow.apache.org/tutorial.html>)
 """
-
 from datetime import timedelta
 import airflow
 from airflow import DAG
 from airflow.operators.bash import BashOperator
-
+# These args will get passed on to each operator
+# You can override them on a per-task basis during operator initialization
 default_args = {
     'owner': 'sillycat',
     'depends_on_past': False,
@@ -18,11 +20,10 @@ default_args = {
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
 }
-
 dag = DAG(
-    'wasi_flow',
+    'system_shell',
     default_args=default_args,
-    description='Build Runtime, AssemblyScript SDK, Rust SDK and test DAG',
+    description='A simple tutorial DAG',
     template_searchpath="/home/carl/work/scripts",
     schedule_interval=timedelta(days=1),
 )
