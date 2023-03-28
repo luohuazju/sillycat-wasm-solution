@@ -131,9 +131,8 @@ test_with_rust_app = BashOperator(
     depends_on_past=False,
     bash_command="""
     cd /home/carl/work/sillycat-wasm-solution/wasi-impl/
-    ./target/debug/wasi-impl ../wasi-consumer-rust/target/wasm32-wasi/debug/wasi_consumer_rust.wasm consume_add 1 2 &&
-     | grep -Ev '3' && 
-     exit 1
+    ./target/debug/wasi-impl ../wasi-consumer-rust/target/wasm32-wasi/debug/wasi_consumer_rust.wasm consume_add 1 2 | grep -Ev '3' && exit 1
+    exit 0
     """,
     dag=dag,
 )
@@ -144,6 +143,7 @@ test_with_as_app = BashOperator(
     bash_command="""
     cd /home/carl/work/sillycat-wasm-solution/wasi-impl/
     ./target/debug/wasi-impl ../wasi-consumer-as/build/wasi-consumer-as.wasm consume_add 1 4 | grep -Ev '5' && exit 1
+    exit 0
     """,
     dag=dag,
 )
