@@ -24,7 +24,7 @@ dag = DAG(
     'system_shell',
     default_args=default_args,
     description='A simple tutorial DAG',
-    template_searchpath="/home/carl/work/scripts",
+    template_searchpath="/Users/carl/work/web3/sillycat-wasm-solution/wasi-airflow-docker/scripts",
     schedule_interval=timedelta(days=1),
 )
 
