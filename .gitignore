@@ -1,3 +1,4 @@
+*/.env
 */*/__pycache__/
 wasi-airflow-docker/logs
 */.scannerwork/
