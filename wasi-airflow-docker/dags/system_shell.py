@@ -11,7 +11,7 @@ from airflow.operators.bash import BashOperator
 # These args will get passed on to each operator
 # You can override them on a per-task basis during operator initialization
 default_args = {
-    'owner': 'sillycat',
+    'owner': 'airflow',
     'depends_on_past': False,
     'start_date': airflow.utils.dates.days_ago(0),
     'email': ['luohuazju@gmail.com'],
