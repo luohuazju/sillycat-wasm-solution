@@ -51,4 +51,24 @@ prepare_rust_dependency = BashOperator(
     dag=dag,
 )
 
-fetch_poc_from_github >> prepare_rust_dependency
+build_app_with_rust = BashOperator(
+    task_id='build_app_with_rust',
+    depends_on_past=False,
+    bash_command="""
+        cd /opt/airflow/sillycat-wasm-solution/wasi-consumer-rust/
+        ~/.cargo/bin/cargo wasi build 
+        """,
+    dag=dag,
+)
+
+unittest_app_with_rust = BashOperator(
+    task_id='unittest_app_with_rust',
+    depends_on_past=False,
+    bash_command="""
+        cd /opt/airflow/sillycat-wasm-solution/wasi-consumer-rust/
+        ~/.cargo/bin/cargo test
+        """,
+    dag=dag,
+)
+
+fetch_poc_from_github >> prepare_rust_dependency >> build_app_with_rust >> unittest_app_with_rust
