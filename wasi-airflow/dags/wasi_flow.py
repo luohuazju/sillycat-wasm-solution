@@ -65,7 +65,7 @@ unittest_app_with_rust = BashOperator(
     depends_on_past=False,
     bash_command="""
         cd /home/carl/work/sillycat-wasm-solution/wasi-consumer-rust/
-        ~/.cargo/bin/cargo test 
+        ~/.cargo/bin/cargo test
         """,
     dag=dag,
 )
