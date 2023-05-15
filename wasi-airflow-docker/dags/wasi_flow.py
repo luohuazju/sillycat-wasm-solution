@@ -151,7 +151,7 @@ test_with_as_app = BashOperator(
 )
 
 
-fetch_poc_from_github >> prepare_rust_dependency >> build_app_with_rust >> unittest_app_with_rust
-fetch_poc_from_github >> prepare_as_dependency >> build_app_with_as >> unittest_app_with_as
+fetch_poc_from_github >> prepare_rust_dependency >> build_app_with_rust >> unittest_app_with_rust >> test_with_rust_app
+fetch_poc_from_github >> prepare_as_dependency >> build_app_with_as >> unittest_app_with_as >> test_with_as_app
 fetch_poc_from_github >> build_runtime >> unittest_runtime >> test_with_rust_app
 fetch_poc_from_github >> build_runtime >> unittest_runtime >> test_with_as_app
