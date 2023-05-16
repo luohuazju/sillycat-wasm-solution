@@ -25,3 +25,10 @@ RUN apt-get -y update \
   && apt-get autoremove -yqq --purge \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
+
+#set up the app
+EXPOSE  8080
+RUN     mkdir -p /app/ 
+ADD     start.sh /app/ 
+WORKDIR /app/
+CMD	[ "./start.sh" ]
