@@ -1,3 +1,4 @@
+wasi-airflow-compose/logs
 */.env
 */*/__pycache__/
 wasi-airflow-docker/logs
