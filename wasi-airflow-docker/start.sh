@@ -2,6 +2,7 @@
 
 #start the service
 cd /opt/airflow
-airflow initdb
-airflow scheduler -D &
-airflow webserver -p 8080
+# tail -f /dev/null
+# airflow initdb
+# airflow scheduler -D &
+# airflow webserver -p 8080
